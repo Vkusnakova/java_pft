@@ -20,34 +20,54 @@ import org.openqa.selenium.*;
             driver = new ChromeDriver();
             baseUrl = "https://www.katalon.com/";
             driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            login("admin", "secret");
         }
 
         @Test
         public void testContactCreation() throws Exception {
-            driver.get("http://localhost/addressbook/index.php");
-            driver.findElement(By.name("user")).clear();
-            driver.findElement(By.name("user")).sendKeys("admin");
-            driver.findElement(By.name("pass")).clear();
-            driver.findElement(By.name("pass")).sendKeys("secret");
-            driver.findElement(By.xpath("//input[@value='Login']")).click();
-            driver.findElement(By.linkText("add new")).click();
+            addNewContact();
+            fillContactForm(new ContactData("daria", "kozhevnikova", "spb", "911", "daria.kozhevnikova@emc.com"));
+            submitContactCreation();
+            returnToHomePage();
+        }
+
+        private void returnToHomePage() {
+            driver.findElement(By.linkText("home")).click();
+        }
+
+        private void submitContactCreation() {
+            driver.findElement(By.name("submit")).click();
+        }
+
+        private void fillContactForm(ContactData contactData) {
             driver.findElement(By.name("firstname")).click();
             driver.findElement(By.name("firstname")).clear();
-            driver.findElement(By.name("firstname")).sendKeys("daria");
+            driver.findElement(By.name("firstname")).sendKeys(contactData.getName());
             driver.findElement(By.name("lastname")).click();
             driver.findElement(By.name("lastname")).clear();
-            driver.findElement(By.name("lastname")).sendKeys("kozhevnikova");
+            driver.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
             driver.findElement(By.name("address")).click();
             driver.findElement(By.name("address")).clear();
-            driver.findElement(By.name("address")).sendKeys("spb");
+            driver.findElement(By.name("address")).sendKeys(contactData.getAddress());
             driver.findElement(By.name("home")).click();
             driver.findElement(By.name("home")).clear();
-            driver.findElement(By.name("home")).sendKeys("911");
+            driver.findElement(By.name("home")).sendKeys(contactData.getPhonenumber());
             driver.findElement(By.name("email")).click();
             driver.findElement(By.name("email")).clear();
-            driver.findElement(By.name("email")).sendKeys("daria.kozhevnikova@emc.com");
-            driver.findElement(By.name("submit")).click();
-            driver.findElement(By.linkText("home")).click();
+            driver.findElement(By.name("email")).sendKeys(contactData.getEmail());
+        }
+
+        private void addNewContact() {
+            driver.findElement(By.linkText("add new")).click();
+        }
+
+        private void login(String login, String password) {
+            driver.get("http://localhost/addressbook/index.php");
+            driver.findElement(By.name("user")).clear();
+            driver.findElement(By.name("user")).sendKeys(login);
+            driver.findElement(By.name("pass")).clear();
+            driver.findElement(By.name("pass")).sendKeys(password);
+            driver.findElement(By.xpath("//input[@value='Login']")).click();
         }
 
         @AfterClass(alwaysRun = true)
