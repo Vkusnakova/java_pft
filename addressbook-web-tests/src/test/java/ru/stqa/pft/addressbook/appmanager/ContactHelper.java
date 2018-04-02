@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import static org.testng.AssertJUnit.assertTrue;
+
 /**
  * Created by kozhed on 02.04.2018.
  */
@@ -43,10 +45,15 @@ public class ContactHelper extends HelperBase{
     }
 
     public void selectContact() {
-        click(By.id("1"));
+        click(By.name("selected[]"));
     }
 
     public void updateContact() {
         click(By.xpath("(//input[@name='update'])[2]"));
+    }
+
+    public void deleteSelectedContact() {
+        click(By.xpath("//input[@value='Delete']"));
+        assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
 }
