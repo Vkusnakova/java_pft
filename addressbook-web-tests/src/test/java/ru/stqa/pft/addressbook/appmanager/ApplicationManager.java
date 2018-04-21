@@ -5,6 +5,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import sun.plugin2.util.BrowserType;
+
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
@@ -23,14 +25,13 @@ public class ApplicationManager {
 
 
     public void init() {
-        if (browser == org.openqa.selenium.remote.BrowserType.GOOGLECHROME) {
+        if (Objects.equals(browser, org.openqa.selenium.remote.BrowserType.GOOGLECHROME)) {
             System.setProperty("webdriver.chrome.driver", "C://Users/kozhed/Documents/GitHub/java_pft/addressbook-web-tests/chromedriver.exe");
             driver = new ChromeDriver();
-        } else if (browser == org.openqa.selenium.remote.BrowserType.FIREFOX) {
-            System.setProperty("webdriver.gecko.driver", "C://Users/Documents/GitHub/java_pft/addressbook-web-tests/geckodriver.exe");
+        } else if (Objects.equals(browser, org.openqa.selenium.remote.BrowserType.FIREFOX)) {
+            System.setProperty("webdriver.gecko.driver", "C://Users/kozhed/Documents/GitHub/java_pft/addressbook-web-tests/geckodriver.exe");
             driver = new FirefoxDriver();
-        }
-         else if (browser == org.openqa.selenium.remote.BrowserType.IE) {
+        } else if (Objects.equals(browser, org.openqa.selenium.remote.BrowserType.IE)) {
             System.setProperty("webdriver.ie.driver", "C://Users/kozhed/Documents/GitHub/java_pft/addressbook-web-tests/IEDriverServer.exe");
                 driver = new InternetExplorerDriver();
         }
