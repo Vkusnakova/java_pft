@@ -25,8 +25,8 @@ public class ApplicationManager {
 
 
     public void init() {
-        if (Objects.equals(browser, org.openqa.selenium.remote.BrowserType.GOOGLECHROME)) {
-            System.setProperty("webdriver.chrome.driver", "C://Users/kozhed/Documents/GitHub/java_pft/addressbook-web-tests/chromedriver.exe");
+        if (browser.equals(org.openqa.selenium.remote.BrowserType.GOOGLECHROME)) {
+            System.setProperty("webdriver.chrome.driver", "/Users/dariakozhevnikova/Desktop/chromedriver");
             driver = new ChromeDriver();
         } else if (Objects.equals(browser, org.openqa.selenium.remote.BrowserType.FIREFOX)) {
             System.setProperty("webdriver.gecko.driver", "C://Users/kozhed/Documents/GitHub/java_pft/addressbook-web-tests/geckodriver.exe");
