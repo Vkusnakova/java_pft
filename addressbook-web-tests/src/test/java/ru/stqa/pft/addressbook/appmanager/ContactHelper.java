@@ -10,10 +10,11 @@ import static org.testng.AssertJUnit.assertTrue;
 /**
  * Created by kozhed on 02.04.2018.
  */
-public class ContactHelper extends HelperBase{
+public class ContactHelper extends HelperBase {
 
 
-    public ContactHelper(WebDriver driver) {super(driver);
+    public ContactHelper(WebDriver driver) {
+        super(driver);
 
     }
 
@@ -57,6 +58,7 @@ public class ContactHelper extends HelperBase{
         click(By.xpath("//input[@value='Delete']"));
         assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
+
     public void createContact(ContactData contact) {
         addNewContact();
         fillContactForm(new ContactData("daria", "kozhevnikova", "spb", "911", "daria.kozhevnikova@emc.com"));
@@ -66,5 +68,9 @@ public class ContactHelper extends HelperBase{
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
+    }
+
+    public int getContactCounter() {
+        return driver.findElements(By.name("selected[]")).size();
     }
 }
