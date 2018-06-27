@@ -18,8 +18,8 @@ public class ContactModificationTests extends TestBase {
             app.getContactHelper().createContact(new ContactData("v", "1", "n", "455", "asd@ffhf.ru"));
         }
         List<ContactData> before = app.getContactHelper().getContactList();//считаем количество элементов перед модификацией
-        app.getContactHelper().initContactModification(0);
-        app.getContactHelper().fillContactForm(new ContactData("vovka - molodec", "kozhevnikov", "spb", "911", "daria.kozhevnikova@emc.com"));
+        app.getContactHelper().initContactModification(2);
+        app.getContactHelper().fillContactForm(new ContactData("vovka", "kozhevnikov", "spb", "911", "daria.kozhevnikova@emc.com"));
         app.getContactHelper().updateContact();
         app.getContactHelper().returnToHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();//считаем количество элементов после модификацией
