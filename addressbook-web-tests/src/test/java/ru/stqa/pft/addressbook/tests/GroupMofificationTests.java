@@ -18,7 +18,7 @@ public class GroupMofificationTests extends TestBase {
         app.getGroupHelper().selectGroup(before.size()-1);
         app.getGroupHelper().initGroupModification();
         app.getGroupHelper().fillGroupForm(new GroupData("grouppp", "2", "3"));
-        app.getGroupHelper().submitGroupmodification();
+        app.getGroupHelper().submitGroupModification();
         app.getGroupHelper().returnToGroupPage();
         List<GroupData> after = app.getGroupHelper().getGroupList();
         Assert.assertEquals(after.size(), before.size());
