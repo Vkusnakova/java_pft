@@ -20,7 +20,7 @@ public class GroupMofificationTests extends TestBase {
         app.getGroupHelper().initGroupModification();
         GroupData group = new GroupData(before.get(before.size()-1).getId(),"group", "2", "3");
         app.getGroupHelper().fillGroupForm(group);
-        app.getGroupHelper().submitGroupmodification();
+        app.getGroupHelper().submitGroupModification();
         app.getGroupHelper().returnToGroupPage();
         List<GroupData> after = app.getGroupHelper().getGroupList();
         Assert.assertEquals(after.size(), before.size());
