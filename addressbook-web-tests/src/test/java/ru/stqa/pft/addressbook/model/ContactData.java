@@ -1,19 +1,68 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.util.Objects;
+
 public class ContactData {
+    private  int id;
     private final String name;
     private final String lastname;
     private final String address;
     private final String phonenumber;
     private final String email;
 
-    public ContactData(String name, String lastname, String address, String phonenumber, String email) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactData that = (ContactData) o;
+        return id == that.id &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(lastname, that.lastname) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(phonenumber, that.phonenumber) &&
+                Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, lastname, address, phonenumber, email);
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", address='" + address + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    public ContactData(int id, String name, String lastname, String address, String phonenumber, String email) {
+        this.id =id;
         this.name = name;
         this.lastname = lastname;
         this.address = address;
         this.phonenumber = phonenumber;
         this.email = email;
     }
+    public ContactData(String name, String lastname, String address, String phonenumber, String email) {
+        this.id =0;
+        this.name = name;
+        this.lastname = lastname;
+        this.address = address;
+        this.phonenumber = phonenumber;
+        this.email = email;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() { return id; }
 
     public String getName() {
         return name;
@@ -34,4 +83,5 @@ public class ContactData {
     public String getEmail() {
         return email;
     }
+
 }
