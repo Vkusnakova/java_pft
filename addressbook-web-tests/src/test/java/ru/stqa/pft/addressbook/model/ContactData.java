@@ -10,37 +10,6 @@ public class ContactData {
     private final String phonenumber;
     private final String email;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactData that = (ContactData) o;
-        return id == that.id &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(lastname, that.lastname) &&
-                Objects.equals(address, that.address) &&
-                Objects.equals(phonenumber, that.phonenumber) &&
-                Objects.equals(email, that.email);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, name, lastname, address, phonenumber, email);
-    }
-
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", address='" + address + '\'' +
-                ", phonenumber='" + phonenumber + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
-
     public ContactData(int id, String name, String lastname, String address, String phonenumber, String email) {
         this.id =id;
         this.name = name;
@@ -84,4 +53,28 @@ public class ContactData {
         return email;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactData that = (ContactData) o;
+        return id == that.id &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(lastname, that.lastname);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, lastname);
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
 }

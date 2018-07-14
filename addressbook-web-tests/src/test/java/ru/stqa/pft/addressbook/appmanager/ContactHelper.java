@@ -81,12 +81,13 @@ public class ContactHelper extends HelperBase {
 
    public List<ContactData> getContactList() {
         List<ContactData> contacts = new ArrayList<>();
-        List<WebElement> elements = driver.findElements(By.xpath("//table[@id='maintable']//tr[@name='entry']/td[1]"));
-        for (WebElement element : elements) {
-            String firstName = element.findElement(By.xpath("//td[3]")).getText();
-            String lastName = element.findElement(By.xpath("//td[2]")).getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData contact = new ContactData(id, firstName, lastName, null,null,null);
+
+       List<WebElement> elements = driver.findElements(By.cssSelector("#maintable tr[name='entry']"));
+       for (WebElement element : elements) {
+           String name = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
+           String lastname = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
+           int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            ContactData contact = new ContactData(id, name, lastname,null,null,null);
             contacts.add(contact);
         }
         return contacts;
@@ -94,3 +95,7 @@ public class ContactHelper extends HelperBase {
     }
 }
 
+     //   List<WebElement> elements = driver.findElements(By.xpath("//table[@id='maintable']//tr[@name='entry']/td[1]"));
+    //    for (WebElement element : elements) {
+      //  String name = element.findElement(By.xpath("//td[2]")).getText();
+      //  String lastname = element.findElement(By.xpath("//td[3]")).getText();
