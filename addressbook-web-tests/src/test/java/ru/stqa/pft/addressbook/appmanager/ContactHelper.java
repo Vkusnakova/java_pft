@@ -41,6 +41,12 @@ public class ContactHelper extends HelperBase {
         type("home", contactData.getPhonenumber());
         type("email", contactData.getEmail());
     }
+    public void modifyContact(int index, ContactData contact) {
+       initContactModification(index);
+       fillContactForm(contact);
+       updateContact();
+       returnToHomePage();
+    }
 
     public void addNewContact() {
         click(By.linkText("add new"));
@@ -99,3 +105,5 @@ public class ContactHelper extends HelperBase {
     //    for (WebElement element : elements) {
       //  String name = element.findElement(By.xpath("//td[2]")).getText();
       //  String lastname = element.findElement(By.xpath("//td[3]")).getText();
+
+
