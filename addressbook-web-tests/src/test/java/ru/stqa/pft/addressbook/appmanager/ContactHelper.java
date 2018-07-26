@@ -69,10 +69,15 @@ public class ContactHelper extends HelperBase {
         assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
 
-    public void createContact(ContactData contact) {
+    public void create(ContactData contact) {
         addNewContact();
         fillContactForm(new ContactData("daria", "kozhevnikova", "spb", "911", "daria.kozhevnikova@emc.com"));
         submitContactCreation();
+        returnToHomePage();
+    }
+    public void delete(int index) {
+        selectContact(index);
+        deleteSelectedContact();
         returnToHomePage();
     }
 
@@ -85,7 +90,7 @@ public class ContactHelper extends HelperBase {
     }
 
 
-   public List<ContactData> getContactList() {
+   public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
 
        List<WebElement> elements = driver.findElements(By.cssSelector("#maintable tr[name='entry']"));
