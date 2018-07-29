@@ -13,7 +13,7 @@ public class HelperBase {
     protected void type(By locator, String text) {
         click(locator);
         if (text != null){
-             String existingText = driver.findElement(locator).getAttribute("value");
+            String existingText = driver.findElement(locator).getAttribute("value");
             if (!text.equals(existingText)){
                 driver.findElement(locator).clear();
                 driver.findElement(locator).sendKeys(text);
@@ -61,7 +61,9 @@ public class HelperBase {
 
     protected void type(String locator, String text) {
         click(By.name(locator));
-        driver.findElement(By.name(locator)).clear();
-        driver.findElement(By.name(locator)).sendKeys(text);
+        if (text != null) {
+            driver.findElement(By.name(locator)).clear();
+            driver.findElement(By.name(locator)).sendKeys(text);
+        }
     }
 }

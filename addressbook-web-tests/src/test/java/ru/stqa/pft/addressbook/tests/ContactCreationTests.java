@@ -15,7 +15,7 @@ public class ContactCreationTests extends TestBase {
         public void testContactCreation() throws Exception {
             app.goTo().homePage();
             List<ContactData> before = app.contact().list();
-            ContactData contact = new ContactData("daria", "kozhevnikova", null, null, null);
+            ContactData contact = new ContactData().withName("dar").withLastname("koz");
             app.contact().create(contact);
             List<ContactData> after = app.contact().list();
             Assert.assertEquals(after.size(), before.size()+1);//размер списка после добавленя равен размеру до плюс 1

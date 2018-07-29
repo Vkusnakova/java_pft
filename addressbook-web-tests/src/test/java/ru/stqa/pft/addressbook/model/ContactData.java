@@ -3,21 +3,14 @@ package ru.stqa.pft.addressbook.model;
 import java.util.Objects;
 
 public class ContactData {
-    private  int id;
-    private final String name;
-    private final String lastname;
-    private final String address;
-    private final String phonenumber;
-    private final String email;
+    private  int id = Integer.MAX_VALUE;
+    private String name;
+    private String lastname;
+    private String address;
+    private String phonenumber;
+    private String email;
 
-    public ContactData(int id, String name, String lastname, String address, String phonenumber, String email) {
-        this.id =id;
-        this.name = name;
-        this.lastname = lastname;
-        this.address = address;
-        this.phonenumber = phonenumber;
-        this.email = email;
-    }
+
 
     @Override
     public boolean equals(Object o) {
@@ -34,17 +27,34 @@ public class ContactData {
         return Objects.hash(name, lastname);
     }
 
-    public ContactData(String name, String lastname, String address, String phonenumber, String email) {
-        this.id =Integer.MAX_VALUE;
+
+    public ContactData withId(int id) {
+        this.id = id;
+        return this;
+    }
+    public ContactData withName(String name) {
         this.name = name;
-        this.lastname = lastname;
-        this.address = address;
-        this.phonenumber = phonenumber;
-        this.email = email;
+        return this;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public ContactData withLastname(String lastname) {
+        this.lastname = lastname;
+        return this;
+    }
+
+    public ContactData withAddress(String address) {
+        this.address = address;
+        return this;
+    }
+
+    public ContactData withPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+        return this;
+    }
+
+    public ContactData withEmail(String email) {
+        this.email = email;
+        return this;
     }
 
     public int getId() { return id; }

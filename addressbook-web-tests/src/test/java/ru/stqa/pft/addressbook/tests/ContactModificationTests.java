@@ -17,7 +17,8 @@ public class ContactModificationTests extends TestBase {
     public void ensurePreconditions() {
         app.goTo().homePage();
         if (app.contact().list().size() == 0) {
-            app.contact().create(new ContactData("v", "1", "n", "455", "asd@ffhf.ru"));
+            app.contact().create(new ContactData()
+                    .withName("v").withLastname("1").withAddress("n").withPhonenumber("455").withEmail("asd@ffhf.ru"));
         }
 
     }
@@ -27,7 +28,10 @@ public class ContactModificationTests extends TestBase {
 
         List<ContactData> before = app.contact().list();//считаем количество элементов перед модификацией
         int index = 7;
-        ContactData contact = new ContactData(before.get(index).getId(),"vovka", "kozhevnikov", "spb", "911", "daria.kozhevnikova@emc.com");
+        ContactData contact = new ContactData()
+                .withId(before.get(index).getId()).withName("vovka").withLastname("kozhevnikov")
+                .withAddress("spb").withPhonenumber("911").withEmail("daria.kozhevnikova@emc.com");
+
         app.contact().modifyContact(index, contact);
         List<ContactData> after = app.contact().list();//считаем количество элементов после модификацией
         Assert.assertEquals(after.size(), before.size()); // сравниваем количество элементов перед и после модицикации
