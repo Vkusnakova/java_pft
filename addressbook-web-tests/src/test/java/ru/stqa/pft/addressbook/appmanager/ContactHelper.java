@@ -7,7 +7,9 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.testng.AssertJUnit.assertTrue;
 
@@ -42,8 +44,8 @@ public class ContactHelper extends HelperBase {
         type("email", contactData.getEmail());
     }
 
-    public void modifyContact(int index, ContactData contact) {
-       initContactModification(index);
+    public void modifyContact(ContactData contact) {
+       initContactModificationById(contact.getId());
        fillContactForm(contact);
        updateContact();
        returnToHomePage();
@@ -57,8 +59,16 @@ public class ContactHelper extends HelperBase {
         driver.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
     }
 
+    public void initContactModificationById(int id) {
+        driver.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
+    }
+
     public void selectContact(int index) {
+
         driver.findElements(By.name("selected[]")).get(index).click();
+    }
+    private void selectContactById(int id) {
+        driver.findElement(By.cssSelector("input[value = '" + id +"']")).click();;
     }
 
     public void updateContact() {
@@ -69,6 +79,20 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
         assertTrue(closeAlertAndGetItsText().matches("^Delete 1 addresses[\\s\\S]$"));
     }
+    public void delete(int index) {
+        selectContact(index);
+        deleteSelectedContact();
+        returnToHomePage();
+    }
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
+        deleteSelectedContact();
+        returnToHomePage();
+
+    }
+
+
+
 
     public void create(ContactData contact) {
         addNewContact();
@@ -76,11 +100,7 @@ public class ContactHelper extends HelperBase {
         submitContactCreation();
         returnToHomePage();
     }
-    public void delete(int index) {
-        selectContact(index);
-        deleteSelectedContact();
-        returnToHomePage();
-    }
+
 
     public boolean isThereAContact() {
         return isElementPresent(By.name("selected[]"));
@@ -104,6 +124,20 @@ public class ContactHelper extends HelperBase {
         return contacts;
 
     }
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<>();
+        List<WebElement> elements = driver.findElements(By.cssSelector("#maintable tr[name='entry']"));
+        for (WebElement element : elements) {
+            String name = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
+            String lastname = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            contacts.add(new ContactData().withId(id).withName(name).withLastname(lastname));
+        }
+        return contacts;
+
+    }
+
+
 }
 
      //   List<WebElement> elements = driver.findElements(By.xpath("//table[@id='maintable']//tr[@name='entry']/td[1]"));

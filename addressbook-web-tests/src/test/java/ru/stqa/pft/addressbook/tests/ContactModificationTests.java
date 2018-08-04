@@ -7,6 +7,7 @@ import ru.stqa.pft.addressbook.model.ContactData;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by kozhed on 02.04.2018.
@@ -26,22 +27,23 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void testContactModifiction () {
 
-        List<ContactData> before = app.contact().list();//считаем количество элементов перед модификацией
-        int index = 7;
+        Set<ContactData> before = app.contact().all();//считаем количество элементов перед модификацией
+        //int index = 7;
+        ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData()
-                .withId(before.get(index).getId()).withName("vovka").withLastname("kozhevnikov")
+                .withId(modifiedContact.getId()).withName("vovka").withLastname("kozhevnikov")
                 .withAddress("spb").withPhonenumber("911").withEmail("daria.kozhevnikova@emc.com");
 
-        app.contact().modifyContact(index, contact);
-        List<ContactData> after = app.contact().list();//считаем количество элементов после модификацией
+        app.contact().modifyContact(contact);
+        Set<ContactData> after = app.contact().all();//считаем количество элементов после модификацией
         Assert.assertEquals(after.size(), before.size()); // сравниваем количество элементов перед и после модицикации
 
 
-        before.remove(index); //удаляем последний объект
+        before.remove(modifiedContact); //удаляем последний объект
         before.add(contact); //добавляем модифицированный объект
         Comparator<? super ContactData> byId = (c1,c2) -> Integer.compare(c1.getId(),c2.getId());
-        before.sort(byId);
-        after.sort(byId);
+        //before.sort(byId);
+        //after.sort(byId);
         Assert.assertEquals(before,after);
     }
 
