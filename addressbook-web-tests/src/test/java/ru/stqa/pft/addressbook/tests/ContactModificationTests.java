@@ -40,15 +40,8 @@ public class ContactModificationTests extends TestBase {
                 .withAddress("spb").withPhonenumber("911").withEmail("daria.kozhevnikova@emc.com");
 
         app.contact().modifyContact(contact);
+        assertThat(app.contact().count(), equalTo(before.size()));// сравниваем количество элементов перед и после модицикации
         Contacts after = app.contact().all();//считаем количество элементов после модификацией
-        assertEquals(after.size(), before.size()); // сравниваем количество элементов перед и после модицикации
-
-
-        //before.remove(modifiedContact); //удаляем последний объект
-        //before.add(contact); //добавляем модифицированный объект
-        //Comparator<? super ContactData> byId = (c1,c2) -> Integer.compare(c1.getId(),c2.getId());
-        //before.sort(byId);
-        //after.sort(byId);
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
     }
 
