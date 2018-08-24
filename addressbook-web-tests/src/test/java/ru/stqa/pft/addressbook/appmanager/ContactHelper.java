@@ -38,8 +38,11 @@ public class ContactHelper extends HelperBase {
         type("firstname", contactData.getName());
         type("lastname", contactData.getLastname());
         type("address", contactData.getAddress());
-        type("home", contactData.getPhonenumber());
+        type("home", contactData.getHomePhone());
+        type("mobile",contactData.getMobilePhone());
+        type("work",contactData.getWorkPhone());
         type("email", contactData.getEmail());
+        //type("allPhones", contactData.getAllPhones());
     }
 
     public void modifyContact(ContactData contact) {
@@ -133,16 +136,32 @@ public class ContactHelper extends HelperBase {
         contactCache = new Contacts();
         List<WebElement> elements = driver.findElements(By.cssSelector("#maintable tr[name='entry']"));
         for (WebElement element : elements) {
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String name = element.findElement(By.cssSelector("td:nth-child(3)")).getText();
             String lastname = element.findElement(By.cssSelector("td:nth-child(2)")).getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            contactCache.add(new ContactData().withId(id).withName(name).withLastname(lastname));
+            String allPhones = element.findElement(By.cssSelector("td:nth-child(6)")).getText();
+            String [] phones = allPhones.split("\n");
+            contactCache.add(new ContactData().withId(id).withName(name).withLastname(lastname)
+                    .withAllPhones(allPhones));
         }
+
+
         return new Contacts(contactCache);
 
     }
 
 
+    public ContactData infoFromEditForm(ContactData contact) {
+        initContactModificationById(contact.getId());
+        String name = driver.findElement(By.name("firstname")).getAttribute("value");
+        String lastname = driver.findElement(By.name("lastname")).getAttribute("value");
+        String home = driver.findElement(By.name("home")).getAttribute("value");
+        String mobile = driver.findElement(By.name("mobile")).getAttribute("value");
+        String work = driver.findElement(By.name("work")).getAttribute("value");
+        driver.navigate().back();
+        return new ContactData().withId(contact.getId()).withName(name).withLastname(lastname)
+                .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+    }
 }
 
      //   List<WebElement> elements = driver.findElements(By.xpath("//table[@id='maintable']//tr[@name='entry']/td[1]"));

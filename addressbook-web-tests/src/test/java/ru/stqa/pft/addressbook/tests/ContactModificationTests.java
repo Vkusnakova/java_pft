@@ -24,7 +24,7 @@ public class ContactModificationTests extends TestBase {
         app.goTo().homePage();
         if (app.contact().all().size() == 0) {
             app.contact().create(new ContactData()
-                    .withName("v").withLastname("1").withAddress("n").withPhonenumber("455").withEmail("asd@ffhf.ru"));
+                    .withName("v").withLastname("1").withAddress("n").withEmail("asd@ffhf.ru"));
         }
 
     }
@@ -37,7 +37,8 @@ public class ContactModificationTests extends TestBase {
         ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData()
                 .withId(modifiedContact.getId()).withName("vovka").withLastname("kozhevnikov")
-                .withAddress("spb").withPhonenumber("911").withEmail("daria.kozhevnikova@emc.com");
+                .withAddress("spb")
+                .withEmail("daria.kozhevnikova@emc.com");
 
         app.contact().modifyContact(contact);
         assertThat(app.contact().count(), equalTo(before.size()));// сравниваем количество элементов перед и после модицикации
