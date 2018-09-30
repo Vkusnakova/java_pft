@@ -1,0 +1,12 @@
+<list>
+  <ru.stqa.pft.addressbook.model.ContactData>
+    <id>2147483647</id>
+    <name>name 0</name>
+    <lastname>lastname 0</lastname>
+  </ru.stqa.pft.addressbook.model.ContactData>
+  <ru.stqa.pft.addressbook.model.ContactData>
+    <id>2147483647</id>
+    <name>name 1</name>
+    <lastname>lastname 1</lastname>
+  </ru.stqa.pft.addressbook.model.ContactData>
+</list>
