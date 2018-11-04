@@ -3,30 +3,49 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 import java.util.Objects;
 
 @XStreamAlias("contacts")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private  int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname")
     private String name;
     @Expose
+    @Column(name = "lastname")
     private String lastname;
+    @Transient
     private String address;
+    @Column(name = "home")
+    @Type(type = "text")
     private String homePhone;
+    @Type(type = "text")
+    @Column(name = "work")
     private String workPhone;
+    @Type(type = "text")
+    @Column(name = "mobile")
     private String mobilePhone;
+    @Transient
     private String email;
+    @Transient
     private String allPhones;
-    private File photo;
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
 
 
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
@@ -91,7 +110,7 @@ public class ContactData {
     }
 
     public File getPhoto() {
-        return photo;
+        return new File (photo);
     }
 
     @Override
@@ -117,26 +136,6 @@ public class ContactData {
     public String getMobilePhone() {
         return mobilePhone;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactData that = (ContactData) o;
-        return id == that.id &&
-                Objects.equals(name, that.name) &&
-                Objects.equals(lastname, that.lastname) &&
-                Objects.equals(homePhone, that.homePhone) &&
-                Objects.equals(workPhone, that.workPhone) &&
-                Objects.equals(mobilePhone, that.mobilePhone);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, name, lastname, homePhone, workPhone, mobilePhone);
-    }
-
 
 
 }

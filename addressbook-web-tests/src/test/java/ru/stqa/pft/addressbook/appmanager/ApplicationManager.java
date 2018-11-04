@@ -23,6 +23,7 @@ public class ApplicationManager {
     public StringBuffer verificationErrors = new StringBuffer();
     public String baseUrl;
     private String browser;
+    private DbHelper dbHelper;
 
     public ApplicationManager(String browser)  {
 
@@ -34,6 +35,7 @@ public class ApplicationManager {
     public void init() throws IOException {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+        dbHelper = new DbHelper();
         if (browser.equals(org.openqa.selenium.remote.BrowserType.GOOGLECHROME)) {
             System.setProperty("webdriver.chrome.driver", "/Users/dariakozhevnikova/Desktop/chromedriver");
             driver = new ChromeDriver();
@@ -51,6 +53,7 @@ public class ApplicationManager {
         sessionHelper = new SessionHelper(driver);
         sessionHelper.login(properties.getProperty("web.adminLogin"),(properties.getProperty("web.adminPassword")));
         contactHelper = new ContactHelper(driver);
+
     }
 
 
@@ -68,5 +71,9 @@ public class ApplicationManager {
 
     public ContactHelper contact() {
         return contactHelper;
+    }
+
+    public DbHelper db(){
+        return dbHelper;
     }
 }
