@@ -14,17 +14,19 @@ import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
     private final Properties properties;
-    public WebDriver driver;
+    private WebDriver driver;
 
     public StringBuffer verificationErrors = new StringBuffer();
     public String baseUrl;
     private String browser;
+    private RegistrationHelper registrationHelper;
 
 
     public ApplicationManager(String browser)  {
 
         this.browser = browser;
         properties = new Properties();
+
     }
 
 
@@ -32,26 +34,16 @@ public class ApplicationManager {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
-        if (browser.equals(org.openqa.selenium.remote.BrowserType.GOOGLECHROME)) {
-            System.setProperty("webdriver.chrome.driver", "/Users/dariakozhevnikova/Desktop/chromedriver");
-            driver = new ChromeDriver();
-        } else if (Objects.equals(browser, org.openqa.selenium.remote.BrowserType.FIREFOX)) {
-            System.setProperty("webdriver.gecko.driver", "C://Users/kozhed/Documents/GitHub/java_pft/addressbook-web-tests/geckodriver.exe");
-            driver = new FirefoxDriver();
-        } else if (Objects.equals(browser, org.openqa.selenium.remote.BrowserType.IE)) {
-            System.setProperty("webdriver.ie.driver", "C://Users/kozhed/Documents/GitHub/java_pft/addressbook-web-tests/IEDriverServer.exe");
-                driver = new InternetExplorerDriver();
+
+
+    }
+
+
+    public void stop() {
+        if (driver != null) {
+            driver.quit();
         }
-        driver.get(properties.getProperty("web.baseUrl"));
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-
     }
-
-
-    public void stop() {driver.quit();
-    }
-
     public HttpSession newSession(){
         return new HttpSession(this);
     }
@@ -60,4 +52,31 @@ public class ApplicationManager {
     public String getProperty(String key) {
         return properties.getProperty(key);
     }
+
+    public RegistrationHelper registartion() {
+        if (registrationHelper == null){
+            registrationHelper = new  RegistrationHelper(this);
+        }
+        return registrationHelper;
+    }
+
+    public WebDriver getDriver() {
+        if (driver == null) {
+            if (browser.equals(org.openqa.selenium.remote.BrowserType.GOOGLECHROME)) {
+                System.setProperty("webdriver.chrome.driver", "/Users/dariakozhevnikova/Desktop/chromedriver");
+                driver = new ChromeDriver();
+            } else if (Objects.equals(browser, org.openqa.selenium.remote.BrowserType.FIREFOX)) {
+                System.setProperty("webdriver.gecko.driver", "C://Users/kozhed/Documents/GitHub/java_pft/addressbook-web-tests/geckodriver.exe");
+                driver = new FirefoxDriver();
+            } else if (Objects.equals(browser, org.openqa.selenium.remote.BrowserType.IE)) {
+                System.setProperty("webdriver.ie.driver", "C://Users/kozhed/Documents/GitHub/java_pft/addressbook-web-tests/IEDriverServer.exe");
+                driver = new InternetExplorerDriver();
+            }
+            driver.get(properties.getProperty("web.baseUrl"));
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
+        }
+        return driver;
+    }
 }
+
